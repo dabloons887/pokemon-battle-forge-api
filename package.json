@@ -1,0 +1,23 @@
+{
+	"name": "pokemon-battle-forge-api",
+	"version": "1.0.0",
+	"description": "Pokémon Team Generator",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/speedyibbi/pokemon-battle-forge-api.git"
+	},
+	"author": "speedyibbi",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/speedyibbi/pokemon-battle-forge-api/issues"
+	},
+	"homepage": "https://github.com/speedyibbi/pokemon-battle-forge-api#readme",
+	"dependencies": {
+		"fastify": "^4.27.0"
+	}
+}
