@@ -168,6 +168,19 @@ const SelectBestPokemon = (pokedex, team, options) => {
 
 const GenerateTeam = (pokedex, team, options = DEFAULT_OPTIONS) => {
 	try {
+		options = {
+			...DEFAULT_OPTIONS,
+			...options,
+			generations: {
+				...DEFAULT_OPTIONS.generations,
+				...options.generations,
+			},
+			weights: {
+				...DEFAULT_OPTIONS.weights,
+				...options.weights,
+			},
+		};
+
 		const filteredPokedex = new Map();
 		for (let [pokemonName, pokemonData] of pokedex) {
 			if (ValidatePokemon(pokemonData, options))
