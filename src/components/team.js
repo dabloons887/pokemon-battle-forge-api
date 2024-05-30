@@ -167,35 +167,39 @@ const SelectBestPokemon = (pokedex, team, options) => {
 };
 
 const GenerateTeam = (pokedex, team, options = DEFAULT_OPTIONS) => {
-	const filteredPokedex = new Map();
-	for (let [pokemonName, pokemonData] of pokedex) {
-		if (ValidatePokemon(pokemonData, options))
-			filteredPokedex.set(pokemonName, pokemonData);
-	}
-
-	if (!battleStyles[options.battleStyle]) {
-		const availableBattleStyles = Object.keys(battleStyles);
-
-		options.battleStyle =
-			availableBattleStyles[
-				Math.floor(Math.random() * availableBattleStyles.length)
-			];
-	}
-
-	while (team.length < 6) {
-		const bestPokemon = SelectBestPokemon(filteredPokedex, team, options);
-
-		if (bestPokemon) {
-			team.push(bestPokemon);
-			!options.duplicates && filteredPokedex.delete(bestPokemon.name);
-		} else {
-			break;
+	try {
+		const filteredPokedex = new Map();
+		for (let [pokemonName, pokemonData] of pokedex) {
+			if (ValidatePokemon(pokemonData, options))
+				filteredPokedex.set(pokemonName, pokemonData);
 		}
+
+		if (!battleStyles[options.battleStyle]) {
+			const availableBattleStyles = Object.keys(battleStyles);
+
+			options.battleStyle =
+				availableBattleStyles[
+					Math.floor(Math.random() * availableBattleStyles.length)
+				];
+		}
+
+		while (team.length < 6) {
+			const bestPokemon = SelectBestPokemon(filteredPokedex, team, options);
+
+			if (bestPokemon) {
+				team.push(bestPokemon);
+				!options.duplicates && filteredPokedex.delete(bestPokemon.name);
+			} else {
+				break;
+			}
+		}
+
+		const { resistances, weaknesses } = AnalyseTeamTyping(team);
+
+		return { team, resistances, weaknesses };
+	} catch (error) {
+		return { team: [], resistances: {}, weaknesses: {} };
 	}
-
-	const { resistances, weaknesses } = AnalyseTeamTyping(team);
-
-	return { team, resistances, weaknesses };
 };
 
 export default GenerateTeam;
