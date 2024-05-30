@@ -10,12 +10,13 @@ import { FetchData, FormatData } from '../utils/helpers.js';
 import FormatPokemon from './pokemon.js';
 
 const DATA_LOCATION = path.resolve('./out/data.json');
+const BACKUP_DATA_LOCATION = path.resolve('./backup_data.json');
 
 async function GetPokedex(regenerateData = false) {
 	let dataExists = false;
 
 	try {
-		await fs.access('./out');
+		await fs.access(path.dirname(DATA_LOCATION));
 		dataExists = true;
 	} catch (error) {
 		dataExists = false;
@@ -48,6 +49,13 @@ async function GetPokedex(regenerateData = false) {
 		} catch (err) {
 			console.log('Something broke :(');
 		}
+	}
+
+	try {
+		console.log('Using backup data.');
+		return await RetrievePokedex(BACKUP_DATA_LOCATION);
+	} catch (err) {
+		console.log('Something broke :(');
 	}
 }
 
@@ -106,8 +114,8 @@ async function GeneratePokedex() {
 	return pokemonData;
 }
 
-async function RetrievePokedex() {
-	return new Map(JSON.parse(await fs.readFile(DATA_LOCATION)));
+async function RetrievePokedex(path = DATA_LOCATION) {
+	return new Map(JSON.parse(await fs.readFile(path)));
 }
 
 export default GetPokedex;
