@@ -4,7 +4,7 @@ const fastify = Fastify({
 	logger: true,
 });
 
-fastify.get('/', async (request, reply) => {
+fastify.get('/', function (request, reply) {
 	return { msg: 'hakuna matata' };
 });
 
