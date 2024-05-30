@@ -15,7 +15,7 @@ async function GetPokedex(regenerateData = false) {
 	let dataExists = false;
 
 	try {
-		await fs.access(DATA_LOCATION);
+		await fs.access('./out');
 		dataExists = true;
 	} catch (error) {
 		dataExists = false;

@@ -199,7 +199,15 @@ function FormatPokemon(pokemon, species, evolutionChain) {
 			is_mythical: species.is_mythical,
 			is_mega: pokemon.name.includes('-mega'),
 			is_gmax: pokemon.name.includes('-gmax'),
-			generation: species.generation.name,
+			generation: pokemon.name.includes('-paldea')
+				? 'generation-ix'
+				: pokemon.name.includes('-galar')
+				? 'generation-viii'
+				: pokemon.name.includes('-hisui')
+				? 'generation-viii'
+				: pokemon.name.includes('-alola')
+				? 'generation-vii'
+				: species.generation.name,
 		},
 		sprite: pokemon.sprites.front_default,
 	};
