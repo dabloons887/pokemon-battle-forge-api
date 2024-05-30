@@ -4,40 +4,34 @@ import fs from 'fs/promises';
 import {
 	evolutionLinksDestinations,
 	pokemonLinksDestinations,
-} from '../lib/links-destinations.js';
-import { FetchData, FormatData } from '../lib/utils.js';
+} from '../utils/links-destinations.js';
+import { FetchData, FormatData } from '../utils/helpers.js';
 
 import FormatPokemon from './pokemon.js';
 
+const DATA_LOCATION = path.resolve('./out/data.json');
+
 async function GetPokedex(regenerateData = false) {
-	let dataFetchedSuccessfully = false;
+	let dataExists = false;
+
+	try {
+		await fs.access(DATA_LOCATION);
+		dataExists = true;
+	} catch (error) {
+		dataExists = false;
+	}
 
 	if (regenerateData) {
 		try {
-			console.log('Fetching data...');
-			await FetchData([
-				...evolutionLinksDestinations,
-				...pokemonLinksDestinations,
-			]);
-			console.log('Formatting data...');
-			await FormatData([
-				...evolutionLinksDestinations,
-				...pokemonLinksDestinations,
-			]);
-			dataFetchedSuccessfully = true;
+			await FetchAndFormatData();
+			return await GeneratePokedex();
 		} catch (err) {
-			console.log('Failed to regenerate data :(');
+			console.log('Something broke :(');
 			console.log('Using previously generated data.');
 		}
 	}
 
-	if (regenerateData && dataFetchedSuccessfully) {
-		try {
-			return await GeneratePokedex();
-		} catch (err) {
-			console.log('Something broke :(');
-		}
-	} else {
+	if (dataExists) {
 		try {
 			return await RetrievePokedex();
 		} catch (err) {
@@ -47,6 +41,33 @@ async function GetPokedex(regenerateData = false) {
 				console.log('Something broke :(');
 			}
 		}
+	} else {
+		try {
+			await FetchAndFormatData();
+			return await GeneratePokedex();
+		} catch (err) {
+			console.log('Something broke :(');
+		}
+	}
+}
+
+async function FetchAndFormatData() {
+	try {
+		console.log('Fetching data...');
+
+		await FetchData([
+			...evolutionLinksDestinations,
+			...pokemonLinksDestinations,
+		]);
+
+		console.log('Formatting data...');
+
+		await FormatData([
+			...evolutionLinksDestinations,
+			...pokemonLinksDestinations,
+		]);
+	} catch (err) {
+		console.log('Failed to regenerate data :(');
 	}
 }
 
@@ -80,18 +101,13 @@ async function GeneratePokedex() {
 			])
 	);
 
-	await fs.writeFile(
-		path.resolve('./out/data.json'),
-		JSON.stringify([...pokemonData])
-	);
+	await fs.writeFile(DATA_LOCATION, JSON.stringify([...pokemonData]));
 
 	return pokemonData;
 }
 
 async function RetrievePokedex() {
-	return new Map(
-		JSON.parse(await fs.readFile(path.resolve('./out/data.json')))
-	);
+	return new Map(JSON.parse(await fs.readFile(DATA_LOCATION)));
 }
 
 export default GetPokedex;
