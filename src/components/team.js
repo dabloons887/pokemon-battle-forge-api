@@ -1,4 +1,4 @@
-import { typeChart, battleStyles } from './constants.js';
+import { typeChart, battleStyles } from '../utils/constants.js';
 
 const DEFAULT_OPTIONS = {
 	battleStyle: 'mixedOffense',

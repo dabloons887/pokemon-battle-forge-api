@@ -2,6 +2,7 @@ import Fastify from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
 
 import GetPokedex from './components/pokedex.js';
+import GenerateTeam from './components/team.js';
 
 const fastify = Fastify({
 	logger: true,
@@ -15,11 +16,13 @@ fastify.register(
 	})
 );
 
-// fastify.get('/', function (request, reply) {
-// 	return {
-// 		pokedex: Array.from(fastify.pokedex, ([_, pokemon]) => pokemon),
-// 	};
-// });
+fastify.get('/', function (request, reply) {
+	const pokedex = fastify.pokedex;
+	return GenerateTeam(pokedex, [pokedex.get('charizard')]);
+	// return {
+	// 	pokedex: Array.from(pokedex, ([_, pokemon]) => pokemon),
+	// };
+});
 
 fastify.listen({ port: 3000, host: '127.0.0.1' }, function (err, address) {
 	if (err) {
