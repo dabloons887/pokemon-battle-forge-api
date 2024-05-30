@@ -5,7 +5,7 @@ const fastify = Fastify({
 });
 
 fastify.get('/', async (request, reply) => {
-	return { hello: 'world' };
+	return { msg: 'hakuna matata' };
 });
 
 fastify.listen({ port: 3000, host: '127.0.0.1' }, function (err, address) {
