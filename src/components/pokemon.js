@@ -1,3 +1,5 @@
+import { typeChart } from '../utils/constants.js';
+
 const DeterminePokemonRoles = (pokemon) => {
 	const roles = [];
 	const highThreshold = 110;
@@ -122,7 +124,12 @@ const AnalysePokemonTyping = (pokemon) => {
 	const resistances = {};
 	const weaknesses = {};
 
-	// todo: analyse pokemon typing
+	pokemon.types.forEach((type) => {
+		Object.keys(typeChart).forEach((key) => {
+			if (typeChart[key][type] < 1) resistances[key] = 1;
+			else if (typeChart[key][type] > 1) weaknesses[key] = 1;
+		});
+	});
 
 	return { resistances, weaknesses };
 };
