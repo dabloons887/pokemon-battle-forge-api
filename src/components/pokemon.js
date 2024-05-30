@@ -1,6 +1,6 @@
 import { typeChart } from '../utils/constants.js';
 
-const DeterminePokemonRoles = (pokemon) => {
+function DeterminePokemonRoles(pokemon) {
 	const roles = [];
 	const highThreshold = 110;
 	const extremeThreshold = 130;
@@ -118,9 +118,9 @@ const DeterminePokemonRoles = (pokemon) => {
 	}
 
 	return roles;
-};
+}
 
-const AnalysePokemonTyping = (pokemon) => {
+function AnalysePokemonTyping(pokemon) {
 	const resistances = {};
 	const weaknesses = {};
 
@@ -132,9 +132,9 @@ const AnalysePokemonTyping = (pokemon) => {
 	});
 
 	return { resistances, weaknesses };
-};
+}
 
-const LastPokemonInEvolutionChain = (species, evolutionChain) => {
+function LastPokemonInEvolutionChain(species, evolutionChain) {
 	const chainLinks = [evolutionChain];
 	const checkedChainLinks = new Set();
 
@@ -154,9 +154,9 @@ const LastPokemonInEvolutionChain = (species, evolutionChain) => {
 	}
 
 	return false;
-};
+}
 
-const FormatPokemon = (pokemon, species, evolutionChain) => {
+function FormatPokemon(pokemon, species, evolutionChain) {
 	pokemon = {
 		id: pokemon.id,
 		name: pokemon.name,
@@ -214,6 +214,6 @@ const FormatPokemon = (pokemon, species, evolutionChain) => {
 	pokemon.species.is_fully_evolved = fullyEvolved;
 
 	return pokemon;
-};
+}
 
 export default FormatPokemon;

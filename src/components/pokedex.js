@@ -7,7 +7,9 @@ import {
 } from '../lib/links-destinations.js';
 import { FetchData, FormatData } from '../lib/utils.js';
 
-const GetPokedex = async (regenerateData = false) => {
+import FormatPokemon from './pokemon.js';
+
+async function GetPokedex(regenerateData = false) {
 	let dataFetchedSuccessfully = false;
 
 	if (regenerateData) {
@@ -46,9 +48,9 @@ const GetPokedex = async (regenerateData = false) => {
 			}
 		}
 	}
-};
+}
 
-const GeneratePokedex = async () => {
+async function GeneratePokedex() {
 	const pokemonFile = JSON.parse(
 		await fs.readFile(path.resolve(pokemonLinksDestinations[7].destination))
 	);
@@ -66,23 +68,30 @@ const GeneratePokedex = async () => {
 			.filter((mon) => mon.sprites.front_default)
 			.map((mon) => [
 				mon.name,
-				null, // todo: format pokemon data
+				FormatPokemon(
+					mon,
+					pokemonSpeciesFile[mon.species.id - 1],
+					evolutionChainFile.find(
+						(chain) =>
+							chain.id ==
+							pokemonSpeciesFile[mon.species.id - 1].evolution_chain.id
+					).chain
+				),
 			])
 	);
 
 	await fs.writeFile(
 		path.resolve('./out/data.json'),
-		JSON.stringify([...pokemonData]),
-		() => {}
+		JSON.stringify([...pokemonData])
 	);
 
 	return pokemonData;
-};
+}
 
-const RetrievePokedex = async () => {
+async function RetrievePokedex() {
 	return new Map(
 		JSON.parse(await fs.readFile(path.resolve('./out/data.json')))
 	);
-};
+}
 
 export default GetPokedex;
