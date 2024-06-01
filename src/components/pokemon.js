@@ -193,6 +193,7 @@ function FormatPokemon(pokemon, species, evolutionChain) {
 		species: {
 			id: species.id,
 			name: species.name,
+			color: species.color.name,
 			is_baby: species.is_baby,
 			is_fully_evolved: null,
 			is_legendary: species.is_legendary,
