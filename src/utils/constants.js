@@ -1,3 +1,9 @@
+/**
+ * Constants.
+ * Type chart for Pokémon types.
+ * Battle styles defining how to structure a team.
+ */
+
 export const typeChart = {
 	normal: {
 		normal: 1,

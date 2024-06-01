@@ -1,3 +1,8 @@
+/**
+ * Helper functions.
+ * Most are used to fetch and format data.
+ */
+
 import path from 'path';
 import fs from 'fs/promises';
 

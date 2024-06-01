@@ -1,6 +1,6 @@
 /**
  * PokéAPI endpoints to fetch data and then store
- * that data at the specified destination as JSON files
+ * that data at the specified destination as JSON files.
  */
 
 export const berriesLinksDestinations = [
