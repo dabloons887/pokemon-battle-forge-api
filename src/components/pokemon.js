@@ -2,28 +2,26 @@ import { typeChart } from '../utils/constants.js';
 
 function DeterminePokemonRoles(pokemon) {
 	const roles = [];
-	const highThreshold = 110;
-	const extremeThreshold = 130;
+	const highThreshold = 100;
+	const extremeThreshold = 120;
 
 	const stats = pokemon.stats;
-	const abilities = pokemon.abilities.map((ability) =>
-		ability.name.toLowerCase()
-	);
-	const moves = pokemon.moves.map((move) => move.name.toLowerCase());
+	const abilities = pokemon.abilities.map((ability) => ability.name);
+	const moves = pokemon.moves.map((move) => move.name);
 
-	if (stats.speed > extremeThreshold && stats.attack > highThreshold) {
+	if (stats.speed > highThreshold && stats.attack > highThreshold) {
 		roles.push('physical-sweeper');
 	}
 
-	if (stats.speed > extremeThreshold && stats.special_attack > highThreshold) {
+	if (stats.speed > highThreshold && stats.special_attack > highThreshold) {
 		roles.push('special-sweeper');
 	}
 
-	if (stats.hp > extremeThreshold && stats.defense > highThreshold) {
+	if (stats.hp > highThreshold && stats.defense > highThreshold) {
 		roles.push('physical-tank');
 	}
 
-	if (stats.hp > extremeThreshold && stats.special_defense > highThreshold) {
+	if (stats.hp > highThreshold && stats.special_defense > highThreshold) {
 		roles.push('special-tank');
 	}
 
@@ -31,9 +29,7 @@ function DeterminePokemonRoles(pokemon) {
 		abilities.includes('healer') ||
 		abilities.includes('shield') ||
 		abilities.includes('wish') ||
-		abilities.includes('aromatherapy') ||
-		moves.includes('wish') ||
-		moves.includes('heal bell')
+		abilities.includes('aromatherapy')
 	) {
 		roles.push('support');
 	}
@@ -47,13 +43,12 @@ function DeterminePokemonRoles(pokemon) {
 	}
 
 	if (
-		(stats.attack > extremeThreshold ||
-			stats.special_attack > extremeThreshold) &&
-		(moves.includes('close combat') ||
-			moves.includes('flare blitz') ||
-			moves.includes('focus blast') ||
-			moves.includes('hyper beam') ||
-			abilities.includes('sheer force') ||
+		(stats.attack > highThreshold || stats.special_attack > highThreshold) &&
+		(moves.includes('close-combat') ||
+			moves.includes('flare-blitz') ||
+			moves.includes('focus-blast') ||
+			moves.includes('hyper-beam') ||
+			abilities.includes('sheer-force') ||
 			abilities.includes('reckless'))
 	) {
 		roles.push('wall-breaker');
@@ -61,41 +56,33 @@ function DeterminePokemonRoles(pokemon) {
 
 	if (
 		abilities.includes('stall') ||
-		abilities.includes('poison heal') ||
+		abilities.includes('poison-heal') ||
 		moves.includes('toxic') ||
-		moves.includes('leech seed') ||
-		moves.includes('protect') ||
-		moves.includes('substitute')
+		moves.includes('leech-seed')
 	) {
 		roles.push('staller');
 	}
 
 	if (
-		abilities.includes('stealth rock') ||
+		abilities.includes('stealth-rock') ||
 		abilities.includes('spikes') ||
-		moves.includes('stealth rock') ||
+		moves.includes('stealth-rock') ||
 		moves.includes('spikes') ||
-		moves.includes('taunt') ||
-		moves.includes('encore')
+		moves.includes('taunt')
 	) {
 		roles.push('lead');
 	}
 
 	if (
-		stats.speed > extremeThreshold &&
-		(moves.includes('u-turn') ||
-			moves.includes('volt switch') ||
-			abilities.includes('regenerator'))
+		stats.speed > highThreshold &&
+		(abilities.includes('u-turn') ||
+			moves.includes('u-turn') ||
+			moves.includes('volt-switch'))
 	) {
 		roles.push('scout');
 	}
 
-	if (
-		(stats.attack > extremeThreshold ||
-			stats.special_attack > extremeThreshold) &&
-		stats.defense < highThreshold &&
-		stats.special_defense < highThreshold
-	) {
+	if (stats.attack > highThreshold || stats.special_attack > highThreshold) {
 		roles.push('glass-cannon');
 	}
 
@@ -107,12 +94,12 @@ function DeterminePokemonRoles(pokemon) {
 	}
 
 	if (
-		abilities.includes('rapid spin') ||
+		abilities.includes('rapid-spin') ||
 		abilities.includes('defog') ||
-		moves.includes('rapid spin') ||
+		moves.includes('rapid-spin') ||
 		moves.includes('defog') ||
-		moves.includes('sticky web') ||
-		moves.includes('knock off')
+		moves.includes('sticky-web') ||
+		moves.includes('knock-off')
 	) {
 		roles.push('utility');
 	}
