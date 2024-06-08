@@ -1,5 +1,6 @@
 import Fastify from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
+import fastifyCors from '@fastify/cors';
 
 import GetPokedex from './components/pokedex.js';
 import GenerateTeam from './components/team.js';
@@ -9,6 +10,10 @@ import generateTeamSchema from './schemas/generate-team-schema.js';
 const fastify = Fastify({
 	logger: true,
 	pluginTimeout: 1000 * 60,
+});
+
+await fastify.register(fastifyCors, {
+	origin: '*',
 });
 
 fastify.register(
@@ -24,11 +29,15 @@ fastify.post(
 	function (request, reply) {
 		const pokedex = fastify.pokedex;
 
-		const team = request.body.team
-			.map((pokemon) => pokedex.get(pokemon.trim().toLowerCase()))
-			.filter((pokemon) => pokemon);
+		try {
+			const team = request.body.team
+				.map((pokemon) => pokedex.get(pokemon.trim().toLowerCase()))
+				.filter((pokemon) => pokemon);
 
-		return GenerateTeam(pokedex, team, request.body.options);
+			return GenerateTeam(pokedex, team, request.body.options);
+		} catch (err) {
+			reply.code(400).send({ team: [], resistances: {}, weaknesses: {} });
+		}
 	}
 );
 
