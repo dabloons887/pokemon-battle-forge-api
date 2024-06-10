@@ -10,7 +10,7 @@ export default {
 				type: 'object',
 				properties: {
 					battleStyle: { type: 'string' },
-					fullyEvolved: { type: 'number' },
+					fullyEvolved: { type: 'boolean' },
 					includeLegendaries: { type: 'boolean' },
 					includeMythical: { type: 'boolean' },
 					includeMegas: { type: 'boolean' },
