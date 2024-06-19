@@ -8,6 +8,10 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 8000
+ENV PORT 8000
+
+ENV HOST 0.0.0.0
+
+EXPOSE $PORT
 
 CMD ["npm", "run", "start"]
