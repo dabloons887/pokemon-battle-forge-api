@@ -9,7 +9,7 @@ import generateTeamSchema from './schemas/generate-team-schema.js';
 
 const fastify = Fastify({
 	logger: true,
-	pluginTimeout: 1000 * 60,
+	pluginTimeout: 0,
 });
 
 await fastify.register(fastifyCors, {
