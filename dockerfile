@@ -14,4 +14,4 @@ ENV HOST 0.0.0.0
 
 EXPOSE $PORT
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "start"]
