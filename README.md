@@ -2,7 +2,7 @@
 
 This API allows you to generate Pokémon teams for battles, making it easier to plan and strategize your Pokémon battles.
 
-> Built using Fastify.
+> Built using Fastify, and PokéAPI.
 
 ## Table of Contents
 
