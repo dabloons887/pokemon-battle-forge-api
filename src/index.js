@@ -17,7 +17,7 @@ await fastify.register(fastifyCors, {
 });
 
 fastify.register(
-	fastifyPlugin(async function (fastify, options) {
+	fastifyPlugin(async function (fastify, _options) {
 		fastify.decorate('pokedex', await GetPokedex());
 		console.log('\x1b[34m%s\x1b[0m', 'Pokedex ready!');
 	})
@@ -41,11 +41,14 @@ fastify.post(
 	}
 );
 
-fastify.listen({ port: process.env.PORT, host: process.env.HOST }, function (err, address) {
-	if (err) {
-		fastify.log.error(err);
-		process.exit(1);
-	}
+fastify.listen(
+	{ port: process.env.PORT || 8000, host: process.env.HOST || '0.0.0.0' },
+	function (err, address) {
+		if (err) {
+			fastify.log.error(err);
+			process.exit(1);
+		}
 
-	console.log('\x1b[36m%s\x1b[0m', `Server listening on ${address}`);
-});
+		console.log('\x1b[36m%s\x1b[0m', `Server listening on ${address}`);
+	}
+);
