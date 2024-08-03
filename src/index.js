@@ -18,7 +18,13 @@ await fastify.register(fastifyCors, {
 
 fastify.register(
 	fastifyPlugin(async function (fastify, _options) {
-		fastify.decorate('pokedex', await GetPokedex());
+		fastify.decorate(
+			'pokedex',
+			await GetPokedex(
+				process.env.REGENERATE_DATA || false,
+				process.env.USE_BACKUP_DATA || false
+			)
+		);
 		console.log('\x1b[34m%s\x1b[0m', 'Pokedex ready!');
 	})
 );

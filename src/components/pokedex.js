@@ -12,8 +12,17 @@ import FormatPokemon from './pokemon.js';
 const DATA_LOCATION = path.resolve('./out/data.json');
 const BACKUP_DATA_LOCATION = path.resolve('./backup_data.json');
 
-async function GetPokedex(regenerateData = false) {
+async function GetPokedex(regenerateData = false, useBackupData = false) {
 	let dataExists = false;
+
+	if (useBackupData) {
+		try {
+			console.log('Using backup data.');
+			return await RetrievePokedex(BACKUP_DATA_LOCATION);
+		} catch (err) {
+			console.log('Something broke :(');
+		}
+	}
 
 	try {
 		await fs.access(path.dirname(DATA_LOCATION));
