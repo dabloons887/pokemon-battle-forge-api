@@ -51,20 +51,4 @@ async function init() {
 	return fastify;
 }
 
-if (import.meta.url !== import.meta.main) {
-	const app = await init();
-
-	app.listen(
-		{ port: process.env.PORT || 8000, host: process.env.HOST || '0.0.0.0' },
-		function (err, address) {
-			if (err) {
-				fastify.log.error(err);
-				process.exit(1);
-			}
-
-			console.log('\x1b[36m%s\x1b[0m', `Server listening on ${address}`);
-		}
-	);
-}
-
 export default init;
