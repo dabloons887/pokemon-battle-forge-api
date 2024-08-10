@@ -4,6 +4,8 @@ This API allows you to generate Pokémon teams for battles, making it easier to 
 
 > Built using Fastify, and PokéAPI.
 
+Try out the API -> api.pokemon-battle-forge.ibrahimkhan.pk
+
 ## Table of Contents
 
 - [Features](#features)
